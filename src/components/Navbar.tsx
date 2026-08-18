@@ -2,50 +2,127 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Wine, ShoppingCart, Menu, X } from "lucide-react";
+import { Wine, ShoppingCart, Menu, X, Search, Package, User } from "lucide-react";
 
 export function Navbar() {
-  const [open, setOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
     <nav className="sticky top-0 z-50 bg-green-900/95 backdrop-blur border-b border-green-800">
-      <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 text-white font-heading text-xl font-bold">
+      <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between gap-4">
+        <Link href="/" className="flex items-center gap-2 text-white font-heading text-xl font-bold flex-shrink-0">
           <Wine className="size-6 text-gold-500" />
           Sip<span className="gold-text">Smart</span>
         </Link>
 
-        <ul className="hidden md:flex items-center gap-6 text-sm text-green-100">
-          <li><Link href="/" className="hover:text-white transition-colors">Home</Link></li>
-          <li><Link href="/products" className="hover:text-white transition-colors">Shop</Link></li>
+        <div className="hidden lg:flex items-center flex-1 max-w-md mx-8">
+          <div className="relative w-full">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-green-400" />
+            <input
+              type="text"
+              placeholder="Search products..."
+              className="w-full bg-green-800/60 border border-green-700 rounded-lg pl-10 pr-4 py-2 text-sm text-white placeholder-green-400 focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors"
+            />
+          </div>
+        </div>
+
+        <ul className="hidden lg:flex items-center gap-1 text-sm text-green-100">
           <li>
-            <Link href="/cart" className="flex items-center gap-1 hover:text-white transition-colors">
+            <Link href="/" className="px-3 py-2 hover:text-white transition-colors rounded-lg hover:bg-green-800/50">
+              Home
+            </Link>
+          </li>
+          <li>
+            <Link href="/products" className="px-3 py-2 hover:text-white transition-colors rounded-lg hover:bg-green-800/50">
+              Shop
+            </Link>
+          </li>
+          <li>
+            <Link href="/products" className="px-3 py-2 hover:text-white transition-colors rounded-lg hover:bg-green-800/50">
+              Categories
+            </Link>
+          </li>
+          <li>
+            <Link href="/tracking" className="px-3 py-2 hover:text-white transition-colors rounded-lg hover:bg-green-800/50">
+              Track Order
+            </Link>
+          </li>
+          <li className="ml-1">
+            <Link href="/cart" className="relative flex items-center gap-1.5 px-3 py-2 hover:text-white transition-colors rounded-lg hover:bg-green-800/50">
               <ShoppingCart className="size-4" />
               Cart
             </Link>
           </li>
-          <li>
-            <Link href="/login" className="bg-gold-500 text-green-900 px-4 py-1.5 rounded-lg text-sm font-semibold hover:bg-gold-400 transition-colors">
+          <li className="ml-2">
+            <Link href="/login" className="bg-gold-500 text-green-900 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gold-400 transition-colors flex items-center gap-1.5">
+              <User className="size-4" />
               Sign In
             </Link>
           </li>
         </ul>
 
-        <button className="md:hidden text-white" onClick={() => setOpen(!open)}>
-          {open ? <X className="size-6" /> : <Menu className="size-6" />}
+        <button className="lg:hidden text-white" onClick={() => setMobileOpen(!mobileOpen)}>
+          {mobileOpen ? <X className="size-6" /> : <Menu className="size-6" />}
         </button>
       </div>
 
-      {open && (
-        <div className="md:hidden bg-green-800 border-t border-green-700 px-4 py-4 space-y-3">
-          <Link href="/" className="block text-green-100 hover:text-white" onClick={() => setOpen(false)}>Home</Link>
-          <Link href="/products" className="block text-green-100 hover:text-white" onClick={() => setOpen(false)}>Shop</Link>
-          <Link href="/cart" className="block text-green-100 hover:text-white" onClick={() => setOpen(false)}>Cart</Link>
-          <Link href="/login" className="block bg-gold-500 text-green-900 px-4 py-2 rounded-lg text-sm font-semibold text-center" onClick={() => setOpen(false)}>
+      {mobileOpen && (
+        <div className="lg:hidden bg-green-800 border-t border-green-700 px-4 py-4 space-y-2">
+          <div className="relative mb-3">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-green-400" />
+            <input
+              type="text"
+              placeholder="Search products..."
+              className="w-full bg-green-700/60 border border-green-600 rounded-lg pl-10 pr-4 py-2.5 text-sm text-white placeholder-green-400 focus:outline-none focus:border-gold-500"
+            />
+          </div>
+          {[
+            { href: "/", label: "Home" },
+            { href: "/products", label: "Shop" },
+            { href: "/products", label: "Categories" },
+            { href: "/tracking", label: "Track Order" },
+            { href: "/cart", label: "Cart" },
+          ].map((item) => (
+            <Link
+              key={item.label}
+              href={item.href}
+              className="block text-green-100 hover:text-white py-2.5 px-3 rounded-lg hover:bg-green-700/50 transition-colors"
+              onClick={() => setMobileOpen(false)}
+            >
+              {item.label}
+            </Link>
+          ))}
+          <Link
+            href="/login"
+            className="block bg-gold-500 text-green-900 px-4 py-3 rounded-lg text-sm font-semibold text-center mt-3"
+            onClick={() => setMobileOpen(false)}
+          >
             Sign In
           </Link>
         </div>
       )}
+
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-green-900 border-t border-green-800 z-50">
+        <div className="flex items-center justify-around py-2">
+          {[
+            { href: "/", icon: <Wine className="size-5" />, label: "Home" },
+            { href: "/products", icon: <Search className="size-5" />, label: "Shop" },
+            { href: "/tracking", icon: <Package className="size-5" />, label: "Orders" },
+            { href: "/cart", icon: <ShoppingCart className="size-5" />, label: "Cart" },
+            { href: "/login", icon: <User className="size-5" />, label: "Account" },
+          ].map((item) => (
+            <Link
+              key={item.label}
+              href={item.href}
+              className="flex flex-col items-center gap-0.5 text-green-300 hover:text-gold-500 transition-colors py-1 px-3"
+              onClick={() => setMobileOpen(false)}
+            >
+              {item.icon}
+              <span className="text-[10px] font-medium">{item.label}</span>
+            </Link>
+          ))}
+        </div>
+      </div>
     </nav>
   );
 }
