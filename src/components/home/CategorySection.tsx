@@ -1,18 +1,18 @@
 import Link from "next/link";
 
 const categories = [
-  { name: "Beer", slug: "beer", emoji: "🍺", color: "from-amber-500 to-amber-700" },
-  { name: "Wine", slug: "wine", emoji: "🍷", color: "from-red-500 to-red-700" },
-  { name: "Spirits", slug: "spirits", emoji: "🥃", color: "from-amber-700 to-amber-900" },
-  { name: "Cider", slug: "cider", emoji: "🍎", color: "from-orange-400 to-orange-600" },
+  { name: "Beer", slug: "beer", emoji: "🍺", color: "from-amber-600 to-amber-800" },
+  { name: "Wine", slug: "wine", emoji: "🍷", color: "from-red-700 to-red-900" },
+  { name: "Spirits", slug: "spirits", emoji: "🥃", color: "from-neutral-700 to-neutral-900" },
+  { name: "Cider", slug: "cider", emoji: "🍎", color: "from-orange-500 to-orange-700" },
 ];
 
 export function CategorySection() {
   return (
-    <section className="bg-green-50 py-16">
+    <section className="bg-neutral-50 py-16">
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-10">
-          <h2 className="font-heading text-3xl font-bold text-green-900 mb-3">
+          <h2 className="font-heading text-3xl font-bold text-neutral-900 mb-3">
             Shop by Category
           </h2>
           <p className="text-neutral-500 max-w-md mx-auto">
@@ -32,7 +32,7 @@ export function CategorySection() {
                 </span>
               </div>
               <div className="p-4 text-center">
-                <h3 className="font-heading font-semibold text-green-900 group-hover:text-gold-600 transition-colors">
+                <h3 className="font-heading font-semibold text-neutral-900 group-hover:text-gold-600 transition-colors">
                   {cat.name}
                 </h3>
                 <p className="text-xs text-neutral-500 mt-1">View all</p>

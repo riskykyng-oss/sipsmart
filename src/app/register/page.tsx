@@ -6,7 +6,6 @@ import { Wine, Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent } from "@/components/ui/card";
 
 export default function RegisterPage() {
   const [showPass, setShowPass] = useState(false);
@@ -21,9 +20,9 @@ export default function RegisterPage() {
     let age = today.getFullYear() - dob.getFullYear();
     if (today < new Date(today.getFullYear(), dob.getMonth(), dob.getDate())) age--;
     if (age < 18) {
-      setAgeFeedback(`❌ You must be 18+. You are currently ${age} years old.`);
+      setAgeFeedback(`You must be 18+. You are currently ${age} years old.`);
     } else {
-      setAgeFeedback(`✓ Age verified — ${age} years old`);
+      setAgeFeedback(`Age verified — ${age} years old`);
     }
   };
 
@@ -54,6 +53,9 @@ export default function RegisterPage() {
       });
       const json = await res.json();
       if (!json.success) throw new Error(json.error || "Registration failed");
+      if (json.data?.user) {
+        localStorage.setItem("sipsmart_user", JSON.stringify(json.data.user));
+      }
       window.location.href = "/products";
     } catch (err) {
       setError(err instanceof Error ? err.message : "Registration failed. Please try again.");
@@ -68,11 +70,11 @@ export default function RegisterPage() {
         <div className="text-white text-center">
           <Wine className="size-16 text-gold-500 mx-auto mb-4" />
           <h1 className="font-heading text-4xl font-bold mb-2">Sip<span className="gold-text">Smart</span></h1>
-          <p className="text-green-200/70 mb-8">Order Smart, Stay Safe</p>
-          <ul className="space-y-3 text-green-100 text-left max-w-xs mx-auto">
+          <p className="text-neutral-400 mb-8">Order Smart, Stay Safe</p>
+          <ul className="space-y-3 text-neutral-300 text-left max-w-xs mx-auto">
             <li>✓ Quick and easy registration</li>
             <li>✓ Secure age verification</li>
-            <li>✓ Instant access to all products</li>
+            <li>✓ $10 welcome bonus in your wallet</li>
             <li>✓ EcoCash &amp; InnBucks payments</li>
           </ul>
         </div>
@@ -114,13 +116,13 @@ export default function RegisterPage() {
             <div>
               <Label>Date of Birth <span className="text-error text-xs">(Must be 18+)</span></Label>
               <Input name="dob" type="date" required onChange={handleDobChange} />
-              {ageFeedback && <p className={`text-xs mt-1 ${ageFeedback.startsWith("❌") ? "text-error" : "text-success"}`}>{ageFeedback}</p>}
+              {ageFeedback && <p className={`text-xs mt-1 ${ageFeedback.startsWith("You must") ? "text-error" : "text-success"}`}>{ageFeedback}</p>}
             </div>
             <label className="flex items-start gap-2 text-sm text-neutral-700">
               <input type="checkbox" name="terms" className="mt-0.5" required />
-              I confirm I am 18+ and agree to the <Link href="#" className="text-green-700 underline">Terms of Service</Link> and <Link href="#" className="text-green-700 underline">Privacy Policy</Link>.
+              I confirm I am 18+ and agree to the <Link href="#" className="text-neutral-700 underline">Terms of Service</Link> and <Link href="#" className="text-neutral-700 underline">Privacy Policy</Link>.
             </label>
-            <Button type="submit" className="w-full bg-green-800 text-white hover:bg-green-700 cursor-pointer" disabled={loading}>
+            <Button type="submit" className="w-full bg-neutral-900 text-white hover:bg-neutral-800 cursor-pointer" disabled={loading}>
               {loading ? "Creating account..." : "Create Account"}
             </Button>
           </form>
@@ -129,7 +131,7 @@ export default function RegisterPage() {
           <Link href="/login">
             <Button variant="outline" className="w-full cursor-pointer">Sign In</Button>
           </Link>
-          <p className="text-center text-xs text-neutral-400 mt-6">⚠️ You must be 18 or older. You&apos;ll be asked to show ID on delivery.</p>
+          <p className="text-center text-xs text-neutral-400 mt-6">You must be 18 or older. You&apos;ll be asked to show ID on delivery.</p>
         </div>
       </div>
     </div>

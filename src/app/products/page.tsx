@@ -25,6 +25,8 @@ export default function ProductsPage() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
+  const [cartCount, setCartCount] = useState(0);
+  const [addedId, setAddedId] = useState<string | null>(null);
 
   const fetchProducts = useCallback(async () => {
     setLoading(true);
@@ -34,7 +36,7 @@ export default function ProductsPage() {
       if (search) params.set("search", search);
       const res = await fetch(`/api/products?${params}`);
       const json = await res.json();
-      setProducts(json.data || []);
+      setProducts(json.data || json || []);
     } catch {
       setProducts([]);
     } finally {
@@ -47,6 +49,11 @@ export default function ProductsPage() {
     return () => clearTimeout(timer);
   }, [fetchProducts]);
 
+  useEffect(() => {
+    const cart = JSON.parse(localStorage.getItem("sipsmart_cart") || "[]");
+    setCartCount(cart.reduce((s: number, i: { quantity: number }) => s + i.quantity, 0));
+  }, []);
+
   const handleAddToCart = (product: Product) => {
     const cart = JSON.parse(localStorage.getItem("sipsmart_cart") || "[]");
     const existing = cart.find((i: Product) => i.id === product.id);
@@ -56,15 +63,18 @@ export default function ProductsPage() {
       cart.push({ ...product, quantity: 1 });
     }
     localStorage.setItem("sipsmart_cart", JSON.stringify(cart));
+    setCartCount(cart.reduce((s: number, i: { quantity: number }) => s + i.quantity, 0));
+    setAddedId(product.id);
+    setTimeout(() => setAddedId(null), 1500);
   };
 
   return (
     <>
-      <div className="bg-green-900 text-white py-12 text-center">
+      <div className="bg-neutral-900 text-white py-12 text-center">
         <h1 className="font-heading text-4xl font-bold">
           Our <span className="gold-text">Products</span>
         </h1>
-        <p className="text-green-200/70 mt-2">Premium drinks delivered to your door</p>
+        <p className="text-neutral-400 mt-2">Premium drinks delivered to your door</p>
       </div>
 
       <div className="bg-white border-b sticky top-16 z-40">
@@ -74,9 +84,9 @@ export default function ProductsPage() {
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
+                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors cursor-pointer ${
                   activeCategory === cat
-                    ? "bg-green-800 text-white"
+                    ? "bg-neutral-900 text-white"
                     : "bg-neutral-100 text-neutral-700 hover:bg-neutral-200"
                 }`}
               >
@@ -120,24 +130,28 @@ export default function ProductsPage() {
                       alt={p.name}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
-                    <Badge className="absolute top-3 left-3 bg-green-800 text-white">{p.category}</Badge>
+                    <Badge className="absolute top-3 left-3 bg-neutral-900 text-white">{p.category}</Badge>
                   </div>
                   <CardContent className="p-4">
                     <h3 className="font-semibold text-neutral-900 mb-1">{p.name}</h3>
                     <p className="text-sm text-neutral-400 line-clamp-2 mb-3">{p.description}</p>
                     <div className="flex items-center justify-between mb-3">
-                      <span className="text-lg font-bold text-green-800">${p.price.toFixed(2)}</span>
+                      <span className="text-lg font-bold text-neutral-900">${p.price.toFixed(2)}</span>
                       <span className={`text-xs font-medium ${p.stock === 0 ? "text-error" : p.stock <= 5 ? "text-warning" : "text-success"}`}>
                         {p.stock === 0 ? "Out of stock" : p.stock <= 5 ? `Only ${p.stock} left` : "In stock"}
                       </span>
                     </div>
                     <Button
-                      className="w-full bg-green-800 text-white hover:bg-green-700 cursor-pointer"
+                      className={`w-full cursor-pointer transition-colors ${
+                        addedId === p.id
+                          ? "bg-success text-white"
+                          : "bg-neutral-900 text-white hover:bg-neutral-800"
+                      }`}
                       disabled={p.stock === 0}
                       onClick={() => handleAddToCart(p)}
                     >
                       <ShoppingCart className="size-4 mr-1" />
-                      {p.stock === 0 ? "Out of Stock" : "Add to Cart"}
+                      {addedId === p.id ? "Added!" : p.stock === 0 ? "Out of Stock" : "Add to Cart"}
                     </Button>
                   </CardContent>
                 </Card>

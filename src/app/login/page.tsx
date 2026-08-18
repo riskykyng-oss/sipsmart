@@ -6,7 +6,6 @@ import { Wine, Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent } from "@/components/ui/card";
 
 export default function LoginPage() {
   const [showPass, setShowPass] = useState(false);
@@ -30,6 +29,9 @@ export default function LoginPage() {
       });
       const json = await res.json();
       if (!json.success) throw new Error(json.error || "Login failed");
+      if (json.data?.user) {
+        localStorage.setItem("sipsmart_user", JSON.stringify(json.data.user));
+      }
       window.location.href = "/products";
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed. Please check your credentials.");
@@ -44,10 +46,10 @@ export default function LoginPage() {
         <div className="text-white text-center">
           <Wine className="size-16 text-gold-500 mx-auto mb-4" />
           <h1 className="font-heading text-4xl font-bold mb-2">Sip<span className="gold-text">Smart</span></h1>
-          <p className="text-green-200/70 mb-8">Order Smart, Stay Safe</p>
-          <ul className="space-y-3 text-green-100 text-left max-w-xs mx-auto">
+          <p className="text-neutral-400 mb-8">Order Smart, Stay Safe</p>
+          <ul className="space-y-3 text-neutral-300 text-left max-w-xs mx-auto">
             <li>✓ Fast 2-hour home delivery</li>
-            <li>✓ Pay with EcoCash &amp; InnBucks</li>
+            <li>✓ Pay with SipSmart Wallet</li>
             <li>✓ Track your order in real-time</li>
             <li>✓ Premium selection of drinks</li>
           </ul>
@@ -72,7 +74,7 @@ export default function LoginPage() {
                 </button>
               </div>
             </div>
-            <Button type="submit" className="w-full bg-green-800 text-white hover:bg-green-700 cursor-pointer" disabled={loading}>
+            <Button type="submit" className="w-full bg-neutral-900 text-white hover:bg-neutral-800 cursor-pointer" disabled={loading}>
               {loading ? "Signing in..." : "Sign In"}
             </Button>
           </form>
@@ -81,7 +83,7 @@ export default function LoginPage() {
           <Link href="/register">
             <Button variant="outline" className="w-full cursor-pointer">Create Account</Button>
           </Link>
-          <p className="text-center text-xs text-neutral-400 mt-6">⚠️ You must be 18 or older. Drink responsibly.</p>
+          <p className="text-center text-xs text-neutral-400 mt-6">You must be 18 or older. Drink responsibly.</p>
         </div>
       </div>
     </div>

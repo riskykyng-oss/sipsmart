@@ -67,6 +67,8 @@
   --color-neutral-900: #111111;
   --color-neutral-800: #1f1f1f;
   --color-neutral-700: #2c2c2c;
+  --color-neutral-600: #404040;
+  --color-neutral-500: #525252;
   --color-neutral-400: #737373;
   --color-neutral-300: #a3a3a3;
   --color-neutral-200: #e5e5e5;
@@ -82,7 +84,7 @@
   --popover-foreground: oklch(0.145 0 0);
   --primary: oklch(0.33 0.14 155);
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.96 0.02 155);
+  --secondary: oklch(0.96 0.01 155);
   --secondary-foreground: oklch(0.205 0 0);
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
@@ -121,7 +123,7 @@
 }
 
 .hero-gradient {
-  background: linear-gradient(135deg, var(--color-green-900) 0%, var(--color-green-800) 50%, var(--color-green-700) 100%);
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
 }
 
 .gold-text {

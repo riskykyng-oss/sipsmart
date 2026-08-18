@@ -18,10 +18,11 @@ export function FeaturedProducts() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/products?limit=8")
+    fetch("/api/products")
       .then((r) => r.json())
       .then((data) => {
-        setProducts(data.slice(0, 8));
+        const items = data.data || data || [];
+        setProducts(items.slice(0, 8));
         setLoading(false);
       })
       .catch(() => setLoading(false));
@@ -32,7 +33,7 @@ export function FeaturedProducts() {
       <section className="py-16">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-10">
-            <h2 className="font-heading text-3xl font-bold text-green-900 mb-3">
+            <h2 className="font-heading text-3xl font-bold text-neutral-900 mb-3">
               Featured Products
             </h2>
           </div>
@@ -57,7 +58,7 @@ export function FeaturedProducts() {
     <section className="py-16">
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-10">
-          <h2 className="font-heading text-3xl font-bold text-green-900 mb-3">
+          <h2 className="font-heading text-3xl font-bold text-neutral-900 mb-3">
             Featured Products
           </h2>
           <p className="text-neutral-500 max-w-md mx-auto">
@@ -70,16 +71,20 @@ export function FeaturedProducts() {
               key={product.id}
               className="group bg-white rounded-2xl border border-neutral-200 overflow-hidden hover:border-gold-500 hover:shadow-lg transition-all"
             >
-              <div className="relative h-44 bg-green-50 flex items-center justify-center overflow-hidden">
-                <div className="text-5xl">🍷</div>
+              <div className="relative h-44 bg-neutral-50 flex items-center justify-center overflow-hidden">
+                <img
+                  src={product.image_url || "https://images.pexels.com/photos/1267360/pexels-photo-1267360.jpeg?auto=compress&cs=tinysrgb&w=600"}
+                  alt={product.name}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
                 <div className="absolute top-3 right-3">
-                  <span className="bg-gold-100 text-gold-700 text-xs font-semibold px-2 py-1 rounded-full capitalize">
+                  <span className="bg-white/90 backdrop-blur text-neutral-700 text-xs font-semibold px-2 py-1 rounded-full capitalize">
                     {product.category}
                   </span>
                 </div>
               </div>
               <div className="p-4">
-                <h3 className="font-semibold text-green-900 text-sm line-clamp-1 group-hover:text-gold-600 transition-colors">
+                <h3 className="font-semibold text-neutral-900 text-sm line-clamp-1 group-hover:text-gold-600 transition-colors">
                   {product.name}
                 </h3>
                 <p className="text-xs text-neutral-500 mt-0.5 capitalize">{product.category}</p>
@@ -90,10 +95,10 @@ export function FeaturedProducts() {
                   <span className="text-xs text-neutral-400 ml-1">(4.0)</span>
                 </div>
                 <div className="flex items-center justify-between mt-3">
-                  <p className="text-lg font-bold text-green-900">
+                  <p className="text-lg font-bold text-neutral-900">
                     ${product.price.toFixed(2)}
                   </p>
-                  <Button size="sm" className="bg-green-900 hover:bg-green-800 text-white h-8 px-3 text-xs">
+                  <Button size="sm" className="bg-neutral-900 hover:bg-neutral-800 text-white h-8 px-3 text-xs">
                     <ShoppingCart className="size-3.5 mr-1" />
                     Add
                   </Button>
@@ -105,7 +110,7 @@ export function FeaturedProducts() {
         <div className="text-center mt-10">
           <a
             href="/products"
-            className="inline-flex items-center gap-2 bg-green-900 text-white px-8 py-3 rounded-xl font-semibold hover:bg-green-800 transition-colors"
+            className="inline-flex items-center gap-2 bg-neutral-900 text-white px-8 py-3 rounded-xl font-semibold hover:bg-neutral-800 transition-colors"
           >
             View All Products
           </a>

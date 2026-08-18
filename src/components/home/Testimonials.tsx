@@ -11,22 +11,22 @@ const testimonials = [
     name: "Rudo K.",
     location: "Borrowdale",
     rating: 5,
-    quote: "Finally a proper online liquor store in Zimbabwe. The selection is amazing and the prices are fair. The age verification gives me confidence.",
+    quote: "Finally a proper online liquor store in Zimbabwe. The selection is amazing and the wallet system makes payments so easy.",
   },
   {
     name: "Tatenda P.",
     location: "Avondale",
     rating: 5,
-    quote: "Great experience from start to finish. Easy to order, paid with EcoCash, and the driver was professional. Will definitely order again.",
+    quote: "Great experience from start to finish. Easy to order, paid with my SipSmart wallet, and the driver was professional. Will definitely order again.",
   },
 ];
 
 export function Testimonials() {
   return (
-    <section className="bg-green-50 py-16">
+    <section className="bg-neutral-50 py-16">
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-10">
-          <h2 className="font-heading text-3xl font-bold text-green-900 mb-3">
+          <h2 className="font-heading text-3xl font-bold text-neutral-900 mb-3">
             What Our Customers Say
           </h2>
           <p className="text-neutral-500 max-w-md mx-auto">
@@ -48,11 +48,11 @@ export function Testimonials() {
                 &ldquo;{testimonial.quote}&rdquo;
               </p>
               <div className="flex items-center gap-3 border-t border-neutral-100 pt-4">
-                <div className="w-10 h-10 bg-green-900 rounded-full flex items-center justify-center text-gold-500 font-semibold text-sm">
+                <div className="w-10 h-10 bg-neutral-900 rounded-full flex items-center justify-center text-gold-500 font-semibold text-sm">
                   {testimonial.name.charAt(0)}
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-green-900">{testimonial.name}</p>
+                  <p className="text-sm font-semibold text-neutral-900">{testimonial.name}</p>
                   <p className="text-xs text-neutral-500">{testimonial.location}</p>
                 </div>
               </div>

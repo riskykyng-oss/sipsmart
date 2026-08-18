@@ -56,7 +56,7 @@ export default function CartPage() {
         <h2 className="text-2xl font-bold text-neutral-900 mb-2">Your cart is empty</h2>
         <p className="text-neutral-400 mb-6">Add some products to get started.</p>
         <Link href="/products">
-          <Button className="bg-green-800 text-white hover:bg-green-700 cursor-pointer">Browse Products</Button>
+          <Button className="bg-neutral-900 text-white hover:bg-neutral-800 cursor-pointer">Browse Products</Button>
         </Link>
       </div>
     );
@@ -64,11 +64,11 @@ export default function CartPage() {
 
   return (
     <>
-      <div className="bg-green-900 text-white py-12 text-center">
+      <div className="bg-neutral-900 text-white py-12 text-center">
         <h1 className="font-heading text-4xl font-bold">
           Your <span className="gold-text">Cart</span>
         </h1>
-        <p className="text-green-200/70 mt-2">Review your items before checkout</p>
+        <p className="text-neutral-400 mt-2">Review your items before checkout</p>
       </div>
 
       <section className="py-8 max-w-6xl mx-auto px-4">
@@ -87,7 +87,7 @@ export default function CartPage() {
                   <div className="flex-1 min-w-0">
                     <h4 className="font-semibold text-neutral-900">{item.name}</h4>
                     <p className="text-xs text-neutral-400">{item.category}</p>
-                    <p className="text-sm text-green-700 mt-1">${item.price.toFixed(2)} each</p>
+                    <p className="text-sm text-neutral-600 mt-1">${item.price.toFixed(2)} each</p>
                   </div>
                   <div className="flex flex-col items-end justify-between">
                     <span className="font-semibold text-neutral-900">${(item.price * item.quantity).toFixed(2)}</span>
@@ -116,20 +116,19 @@ export default function CartPage() {
                 <div className="flex justify-between text-sm"><span>Subtotal</span><span>${subtotal.toFixed(2)}</span></div>
                 <div className="flex justify-between text-sm"><span>Delivery Fee</span><span>${DELIVERY_FEE.toFixed(2)}</span></div>
                 <Separator />
-                <div className="flex justify-between font-bold text-lg"><span>Total</span><span className="text-green-800">${total.toFixed(2)}</span></div>
-                <div className="text-xs text-neutral-400 space-y-1 bg-green-50 rounded-lg p-3">
-                  <p>📦 Delivery within 2 hours</p>
-                  <p>📍 Harare &amp; Bulawayo only</p>
+                <div className="flex justify-between font-bold text-lg"><span>Total</span><span className="text-neutral-900">${total.toFixed(2)}</span></div>
+                <div className="text-xs text-neutral-400 space-y-1 bg-neutral-50 rounded-lg p-3">
+                  <p>Delivery within 2 hours</p>
+                  <p>Harare &amp; Bulawayo only</p>
                 </div>
                 <Link href="/checkout" className="block">
-                  <Button className="w-full bg-green-800 text-white hover:bg-green-700 cursor-pointer" size="lg">
-                    Proceed to Checkout →
+                  <Button className="w-full bg-gold-500 text-neutral-900 hover:bg-gold-400 font-bold cursor-pointer" size="lg">
+                    Proceed to Checkout
                   </Button>
                 </Link>
                 <Link href="/products" className="block text-center text-sm text-neutral-400 hover:text-neutral-700">
-                  ← Continue Shopping
+                  Continue Shopping
                 </Link>
-                <p className="text-center text-xs text-neutral-300">⚠️ Drink responsibly. 18+ only.</p>
               </CardContent>
             </Card>
           </div>
