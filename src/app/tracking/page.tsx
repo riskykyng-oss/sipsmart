@@ -38,6 +38,8 @@ export default function TrackingPage() {
         const u = JSON.parse(stored);
         setUser(u);
         fetchOrders(u.id);
+        const interval = setInterval(() => fetchOrders(u.id), 10000);
+        return () => clearInterval(interval);
       } catch {
         setLoading(false);
       }

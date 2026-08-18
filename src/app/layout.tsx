@@ -35,7 +35,7 @@ export default function RootLayout({
         <AgeGate />
         <AnnouncementBar />
         <Navbar />
-        <main className="flex-1">{children}</main>
+        <main className="flex-1 pb-20">{children}</main>
         <Footer />
       </body>
     </html>

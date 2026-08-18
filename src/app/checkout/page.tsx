@@ -49,6 +49,13 @@ export default function CheckoutPage() {
     }
   }, []);
 
+  useEffect(() => {
+    if (success) {
+      const timer = setTimeout(() => { window.location.href = "/tracking"; }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [success]);
+
   const fetchWallet = async (userId: string) => {
     setLoadingWallet(true);
     try {
@@ -90,14 +97,17 @@ export default function CheckoutPage() {
   if (success) {
     return (
       <div className="max-w-lg mx-auto px-4 py-20 text-center">
-        <p className="text-5xl mb-4">🎉</p>
+        <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+          <span className="text-4xl">✓</span>
+        </div>
         <h2 className="text-3xl font-bold text-neutral-900 mb-2">Order Placed!</h2>
-        <p className="text-neutral-400 mb-4">Your order has been sent to a supplier for confirmation. You&apos;ll receive an estimated delivery time once accepted.</p>
-        <div className="inline-block bg-neutral-100 text-neutral-800 font-mono font-bold px-4 py-2 rounded-lg mb-6">
+        <p className="text-neutral-500 mb-4">Your order has been sent to a supplier. You&apos;ll see the status update once they accept it.</p>
+        <div className="inline-block bg-neutral-100 text-neutral-800 font-mono font-bold px-4 py-2 rounded-lg mb-2">
           Order #{success.id.slice(0, 8).toUpperCase()}
         </div>
+        <p className="text-xs text-neutral-400 mb-8">Redirecting to tracking in 3 seconds...</p>
         <div className="flex flex-col gap-3">
-          <Link href="/tracking"><Button className="bg-neutral-900 text-white hover:bg-neutral-800 cursor-pointer">Track My Order</Button></Link>
+          <Link href="/tracking"><Button className="bg-gold-500 text-neutral-900 hover:bg-gold-400 font-bold cursor-pointer" size="lg">Track My Order</Button></Link>
           <Link href="/products"><Button variant="outline" className="cursor-pointer">Continue Shopping</Button></Link>
         </div>
       </div>
