@@ -14,6 +14,7 @@ const navItems = [
 
 export function Navbar() {
   const pathname = usePathname();
+  if (pathname.startsWith("/supplier")) return null;
 
   return (
     <>
